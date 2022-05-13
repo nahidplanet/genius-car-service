@@ -1,0 +1,10 @@
+
+.dvider{
+    width: 100px;
+    height: 2px ;
+    background: lightgray;
+
+}
+.forget{
+    cursor: pointer;
+}
