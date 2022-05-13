@@ -6,6 +6,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase/firebase.init';
 import logo from '../../../images/logo.png'
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const Header = () => {
     const [user] = useAuthState(auth);
@@ -14,6 +16,9 @@ const Header = () => {
         e.preventDefault();
         signOut(auth);
          
+    }
+    if (user) {
+        toast('Hello '+ user?.displayName);
     }
     
     return (
@@ -46,6 +51,7 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <ToastContainer></ToastContainer>
         </header>
     );
 };

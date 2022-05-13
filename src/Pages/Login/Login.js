@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Button, Container, Form, ModalBody, ModalFooter, ModalHeader, ModalTitle, Row } from 'react-bootstrap';
+import React, { useRef, } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase/firebase.init';
@@ -35,9 +35,9 @@ const Login = () => {
     if (error) {
         errorElement = <p className='text-danger'>Error: {error?.message}</p>;
     }
-    if (loading||sending) {
+    if (loading || sending) {
         return <Loading></Loading>;
-      }
+    }
     // form submit eventhandler 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -52,10 +52,10 @@ const Login = () => {
         if (email) {
             await sendPasswordResetEmail(email);
             toast('set email verification');
-        }else{
+        } else {
             toast('Please Enter Your Email');
         }
-        
+
     }
     // navigate to register page 
     const navigateRagister = () => {
@@ -63,42 +63,45 @@ const Login = () => {
     }
 
     return (
-        <Container className='w-50 p-5'>
-            <h1 className='text-parimary text-center mx-auto'>Please Login</h1>
+        <Container className=' p-5 d-flex justify-content-center'>
             <Row>
-                <Form onSubmit={handleFormSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control ref={emailRef} type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                        </Form.Text>
-                    </Form.Group>
+                <h1 className='text-parimary text-center mx-auto'>Please Login</h1>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control ref={passwordRef} type="password" placeholder="Password" />
-                    </Form.Group>
-                    {errorElement}
-                    <Button variant="primary" type="submit">
-                        Login
-                    </Button>
-                </Form>
+                <Col xs={12} sm={12} md={6} lg={6} className='text-parimary mx-auto'>
+                    <Form onSubmit={handleFormSubmit}>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control ref={emailRef} type="email" placeholder="Enter email" />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
 
-                {/* <ForgetPassword email={email}></ForgetPassword> */}
-                <p
-                    onClick={resetPassword}
-                >
-                    Reset password?
-                    <span onClick={navigateRagister} className="text-danger" style={{ cursor: 'pointer' }}> Go to Register</span>
-                </p>
-                <div className='divider d-flex align-items-center justify-content-center'>
-                    <p className='dvider'></p>
-                    <p className='mx-2'>or</p>
-                    <p className='dvider'></p>
-                </div>
-                <div className="login-with-others">
-                    <LoginWithOthers></LoginWithOthers>
-                </div>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control ref={passwordRef} type="password" placeholder="Password" />
+                        </Form.Group>
+                        {errorElement}
+                        <Button variant="primary" type="submit">
+                            Login
+                        </Button>
+                    </Form>
+
+                    <p
+                        onClick={resetPassword}
+                    >
+                        Reset password?
+                        <span onClick={navigateRagister} className="text-danger" style={{ cursor: 'pointer' }}> Go to Register</span>
+                    </p>
+                    <div className='divider d-flex align-items-center justify-content-center'>
+                        <p className='dvider'></p>
+                        <p className='mx-2'>or</p>
+                        <p className='dvider'></p>
+                    </div>
+                    <div className="login-with-others">
+                        <LoginWithOthers></LoginWithOthers>
+                    </div>
+                </Col>
+
             </Row>
             <ToastContainer />
         </Container>
