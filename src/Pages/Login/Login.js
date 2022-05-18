@@ -53,9 +53,7 @@ const Login = () => {
         if (email) {
             await sendPasswordResetEmail(email);
             toast('set email verification');
-        } else {
-            toast('Please Enter Your Email');
-        }
+        } 
 
     }
     // navigate to register page 
