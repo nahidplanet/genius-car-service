@@ -8,6 +8,7 @@ import LoginWithOthers from '../Shared/LoginWithOthers/LoginWithOthers';
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import Loading from '../Shared/Loading/Loading';
 import { toast, ToastContainer } from 'react-toastify';
+import PageTitle from '../Shared/PageTitle/PageTitle';
 
 const Login = () => {
     const emailRef = useRef('');
@@ -64,6 +65,7 @@ const Login = () => {
 
     return (
         <Container className=' p-5 d-flex justify-content-center'>
+            <PageTitle title={'login'}></PageTitle>
             <Row>
                 <h1 className='text-parimary text-center mx-auto'>Please Login</h1>
 

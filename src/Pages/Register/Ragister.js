@@ -6,6 +6,7 @@ import auth from '../../firebase/firebase.init';
 import LoginWithOthers from '../Shared/LoginWithOthers/LoginWithOthers';
 import './Register.css'
 import Loading from '../Shared/Loading/Loading';
+import PageTitle from '../Shared/PageTitle/PageTitle';
 
 
 const Ragister = () => {
@@ -64,6 +65,7 @@ const Ragister = () => {
 
     return (
         <Container >
+            <PageTitle title={'registration'}></PageTitle>
             <Row>
                 <h1 className='text-center text-primary'>Register</h1>
                 <Col xs={12} sm={12} md={6} lg={3} className='text-parimary mx-auto'>

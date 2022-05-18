@@ -1,26 +1,39 @@
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState, useSendEmailVerification } from 'react-firebase-hooks/auth';
 import { Navigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import auth from '../../../firebase/firebase.init';
 import Loading from '../Loading/Loading';
+import 'react-toastify/dist/ReactToastify.css';
 
-const RequireAuth = ({children}) => {
-    let [user, loading, error] = useAuthState(auth);
+const RequireAuth = ({ children }) => {
+  let [user, loading, error] = useAuthState(auth);
   let location = useLocation();
+  const [sendEmailVerification, sending, errorVerify] = useSendEmailVerification(auth)
   if (loading) {
     return <Loading></Loading>;
   }
-  if(error){
+  if (error) {
     console.log(error?.message);
   }
+  
   if (!user) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-    return children;
+  if (!user.emailVerified) {
+    return <div>
+      <h1>Your Email Not Verified</h1>
+      <p>go to your email and verify</p>
+      <button
+        onClick={async () => {
+          await sendEmailVerification();
+          toast('Sent email');
+        }}
+      >Resend </button>
+      <ToastContainer></ToastContainer>
+    </div>
+  }
+  return children;
 };
 
 export default RequireAuth;
