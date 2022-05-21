@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Col, Container, Row, } from 'react-bootstrap';
 import { useSignInWithGoogle, useSignInWithFacebook, useSignInWithGithub } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase/firebase.init';
 import google from '../../../images/social/google.png'
 import facebook from '../../../images/social/facebook.png'
@@ -16,9 +16,13 @@ const LoginWithOthers = () => {
     const [signInWithGithub, userG, loadingG, errorG] = useSignInWithGithub(auth);
     let handleError;
 
+    let location = useLocation();
+    // redirect path 
+    let from = location?.state?.from?.pathname || "/";
+
     const navigate = useNavigate()
     if (user || userG || userF) {
-        navigate('/home');
+        navigate(from, { replace: true });
     }
     if (loading || loadingF || loadingG) {
         return <Loading></Loading>;

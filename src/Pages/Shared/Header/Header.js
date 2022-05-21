@@ -48,6 +48,9 @@ const Header = () => {
                                 user && <Nav.Link as={Link} to={'/manage'}>Manage </Nav.Link>
                             }
                             {
+                                user && <Nav.Link as={Link} to={'/orders'}>Orders </Nav.Link>
+                            }
+                            {
                                 user ?
                                     <Nav.Link onClick={handleSingOut} as={Link} to={'/login'}>Sing Out</Nav.Link>
                                     :
