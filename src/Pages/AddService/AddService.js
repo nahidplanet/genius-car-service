@@ -6,7 +6,7 @@ const AddService = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => {
     
-    fetch(`http://localhost:5000/service`,{
+    fetch(`https://stark-oasis-12721.herokuapp.com/service`,{
       method:"POST",
       headers:{
         "content-type":"Application/json"

@@ -1,4 +1,4 @@
-import React, { useRef, } from 'react';
+import React, { useEffect, useRef, } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import Loading from '../Shared/Loading/Loading';
 import { toast, ToastContainer } from 'react-toastify';
 import PageTitle from '../Shared/PageTitle/PageTitle';
+// import axios from 'axios';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const emailRef = useRef('');
@@ -16,20 +18,18 @@ const Login = () => {
     // const [email, setEmail] = useState('');
     let navigate = useNavigate();
     let location = useLocation();
-    // redirect path 
     let from = location?.state?.from?.pathname || "/";
     let errorElement;
     const [
         signInWithEmailAndPassword,
         user,
         loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
-    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
-        auth
-    );
-    // rediret after login 
-    if (user) {
+        error,] = useSignInWithEmailAndPassword(auth);
+
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+    const [token] = useToken(user);
+
+    if (token) {
         navigate(from, { replace: true });
     }
     // handle error 
@@ -39,21 +39,24 @@ const Login = () => {
     if (loading || sending) {
         return <Loading></Loading>;
     }
+
+
     // form submit eventhandler 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         const email = emailRef.current.value;
-        // setEmail(email);
         const password = passwordRef.current.value;
-        signInWithEmailAndPassword(email, password);
+
+        await signInWithEmailAndPassword(email, password);
     }
+
     // reset password 
     const resetPassword = async () => {
         const email = emailRef.current.value;
         if (email) {
             await sendPasswordResetEmail(email);
             toast('set email verification');
-        } 
+        }
 
     }
     // navigate to register page 

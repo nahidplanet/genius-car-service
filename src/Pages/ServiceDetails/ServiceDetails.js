@@ -41,7 +41,7 @@ const ServiceDetails = () => {
             phone: e.target.phone.value
 
         }
-        const url = `http://localhost:5000/order`;
+        const url = `https://stark-oasis-12721.herokuapp.com/order`;
         // fetch(url, {
         //     method: "POST",
         //     headers: {

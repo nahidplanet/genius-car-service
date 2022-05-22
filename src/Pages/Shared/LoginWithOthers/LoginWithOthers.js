@@ -7,6 +7,7 @@ import google from '../../../images/social/google.png'
 import facebook from '../../../images/social/facebook.png'
 import github from '../../../images/social/github.png'
 import Loading from '../Loading/Loading';
+import useToken from '../../../hooks/useToken';
 
 
 
@@ -15,13 +16,15 @@ const LoginWithOthers = () => {
     const [signInWithFacebook, userF, loadingF, errorF] = useSignInWithFacebook(auth);
     const [signInWithGithub, userG, loadingG, errorG] = useSignInWithGithub(auth);
     let handleError;
+    const [token ] =  useToken(user || userF || userG)
+    
 
     let location = useLocation();
     // redirect path 
     let from = location?.state?.from?.pathname || "/";
 
     const navigate = useNavigate()
-    if (user || userG || userF) {
+    if (token) {
         navigate(from, { replace: true });
     }
     if (loading || loadingF || loadingG) {
